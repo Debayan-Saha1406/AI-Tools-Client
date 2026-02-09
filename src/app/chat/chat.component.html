@@ -1,0 +1,41 @@
+<div class="chat-container">
+
+  <div class="messages" #scrollContainer>
+
+    <div
+      *ngFor="let m of messages"
+      class="message"
+      [class.user]="m.role === 'user'"
+      [class.bot]="m.role === 'bot'">
+
+      <div class="bubble">
+        <div markdown [data]="m.text"></div>
+      </div>
+
+    </div>
+
+    @if (loading) {
+      <div class="message bot typing">
+        <div class="bubble">
+          🤖 Typing<span class="dots">...</span>
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <div class="input-row">
+    <input
+      [(ngModel)]="userInput"
+      placeholder="Ask Llama..."
+      (keyup.enter)="send()"
+      [disabled]="loading"
+    />
+
+    <button (click)="send()" [disabled]="loading">
+      Send
+    </button>
+
+  </div>
+
+</div>

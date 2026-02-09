@@ -1,0 +1,67 @@
+<h2>Products</h2>
+
+@if (loadingProducts) {
+  <p>Loading products...</p>
+} @else {
+  <div class="product-panel">
+    <ul class="product-list">
+      @for (p of products; track p.id) {
+        <li
+          (click)="selectProduct(p)"
+          [class.selected]="selectedProduct?.id === p.id"
+          class="product-item"
+        >
+          {{ p.name }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  @if (selectedProduct) {
+    <div class="product-detail-panel">
+      <div class="details-box">
+        <h3>{{ selectedProduct.name }}</h3>
+        <p>{{ selectedProduct.description }}</p>
+        <p>Price: Rs{{ selectedProduct.price }}</p>
+      </div>
+
+      @if (loadingReviews) {
+        <p>Loading reviews...</p>
+      } @else {
+        @if (!reviewSummary.reviews.length) {
+          <p>No reviews found.</p>
+        } @else {
+          @if (reviewSummary.summary) {
+            <div class="summary-box">
+              <h4>Review Summary:</h4>
+
+              <markdown [data]="reviewSummary.summary"></markdown>
+            </div>
+          } @else {
+            <div class="action-bar">
+              <button class="summarize-btn" (click)="generateSummary()" [disabled]="loadingSummary">
+                Summarize Reviews
+              </button>
+            </div>
+          }
+          <ul>
+            @for (r of reviewSummary.reviews; track r.id) {
+              <li>
+                <div class="review-header">
+                  <strong>{{ r.author }}</strong>
+
+                  <span class="stars">
+                    @for (star of [1, 2, 3, 4, 5]; track star) {
+                      <span class="star" [class.filled]="star <= r.rating"> ★ </span>
+                    }
+                  </span>
+                </div>
+                <p>{{ r.content }}</p>
+              </li>
+            }
+          </ul>
+        }
+      }
+    </div>
+  }
+}

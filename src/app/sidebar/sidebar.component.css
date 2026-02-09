@@ -1,0 +1,54 @@
+.sidebar {
+  width: 260px;
+  height: 200vh;
+  background: linear-gradient(180deg, #1f2023, #111214);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 18px 14px;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+nav button {
+  all: unset;
+  cursor: pointer;
+
+  padding: 12px 14px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #eaeaea;
+
+  transition: background 0.2s ease;
+}
+
+nav button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+nav button.active {
+  background: rgba(255, 255, 255, 0.15);
+}
