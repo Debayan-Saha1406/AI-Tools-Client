@@ -9,13 +9,13 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule]
 })
 export class TranslatorComponent {
-  inputText = '';
-  translatedText = '';
-  fromLang = 'en';
-  toLang = 'fr';
-  loading = false;
+  public inputText: string = '';
+  public translatedText: string = '';
+  public fromLang: string = 'en';
+  public toLang: string = 'fr';
+  public loading: boolean = false;
 
-  languages = [
+  public languages = [
     { code: 'en', name: 'English' },
     { code: 'fr', name: 'French' },
     { code: 'hi', name: 'Hindi' },
@@ -26,7 +26,7 @@ export class TranslatorComponent {
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
-  translate() {
+  public translate(): void {
      this.loading = true;
     if (!this.inputText || !this.fromLang || !this.toLang) {
       alert('Please fill everything!');

@@ -1,0 +1,58 @@
+<div class="chat-container">
+  <div class="messages" #scrollContainer>
+    @for (m of messages; track m.id) {
+      <div
+        class="message"
+        [class.user]="m.role === 'user'"
+        [class.bot]="m.role === 'bot'"
+      >
+        <div class="bubble">
+          <div markdown [data]="m.text"></div>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <div class="message bot typing">
+        <div class="bubble">
+          🤖 Typing<span class="dots">...</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- INPUT AREA -->
+  <div class="input-row">
+    <label class="upload-btn">
+      📎 Upload PDF
+      <input
+        type="file"
+        accept="application/pdf"
+        (change)="onFileSelected($event)"
+        [disabled]="loading"
+        hidden
+      />
+    </label>
+
+    @if (selectedFileName) {
+      <span class="file-name">{{ selectedFileName }}</span>
+    }
+
+    <!-- hidden PDF loader -->
+    @if (pdfSrc) {
+      <pdf-viewer
+        [src]="pdfSrc"
+        (after-load-complete)="onPdfLoad($event)"
+        [render-text]="true"
+        style="
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          opacity: 0;
+          left: -9999px;
+        "
+      >
+      </pdf-viewer>
+    }
+  </div>
+</div>

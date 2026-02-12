@@ -27,26 +27,26 @@ interface ReviewSummary {
 })
 
 export class ReviewSummarizerComponent {
-  products: any[] = [];
-  selectedProduct: any = null;
-  reviewSummary : ReviewSummary= {
+  public products: any[] = [];
+  public selectedProduct: any = null;
+  public reviewSummary : ReviewSummary= {
     reviews: /** @type {Review[]} */ ([]),
     summary: ''
   }
   // reviews: any[] = [];
   // summary: string = '';
-  loadingProducts: boolean = false;
-  loadingReviews: boolean = false;
-  loadingSummary: boolean = false;
+  public loadingProducts: boolean = false;
+  public loadingReviews: boolean = false;
+  public loadingSummary: boolean = false;
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
 
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.loadProducts();
   }
 
-  loadProducts() {
+  public loadProducts(): void {
     this.loadingProducts = true;
     this.http
       .get<any[]>('http://localhost:3000/api/products')
@@ -58,13 +58,12 @@ export class ReviewSummarizerComponent {
         },
         error: (err) => {
           this.loadingProducts = false;
-          console.error('Failed to load products', err);
           this.cdr.detectChanges();
         }
       });
   }
 
-   selectProduct(product: any) {
+  public selectProduct(product: any): void {
     this.loadingReviews = true;
     this.selectedProduct = product;
    
@@ -82,13 +81,12 @@ export class ReviewSummarizerComponent {
             summary: ''
           };
           this.loadingReviews = false;
-          console.error('Failed to load reviews', err);
           this.cdr.detectChanges();
         },
       });
   }
 
-  generateSummary() {
+  public generateSummary(): void {
   this.loadingSummary = true;
    this.http
       .post<any>('http://localhost:3000/api/products/{}/reviews/summarize'.replace('{}', this.selectedProduct.id), {})
@@ -103,7 +101,6 @@ export class ReviewSummarizerComponent {
           this.cdr.detectChanges();
         },
         error: (err) => {
-          console.error('Failed to generate summary', err);
           this.loadingSummary = false;
           this.cdr.detectChanges();
         }
